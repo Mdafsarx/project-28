@@ -7,7 +7,7 @@ const JobCategory = () => {
 
     const [categoryData, setCategoryData] = useState([])
     useEffect(() => {
-        axios.get('/category.json')
+        axios.get('./category.json')
             .then(data => setCategoryData(data.data))
     }, [])
     console.log(categoryData)

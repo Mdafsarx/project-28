@@ -6,7 +6,7 @@ const useFeatured = () => {
       const [data,setData]=useState([])
 
       useEffect(()=>{
-        axios.get('/f.json').then((data)=>setData(data.data))
+        axios.get('./f.json').then((data)=>setData(data.data))
       },[])
 
 
