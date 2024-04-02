@@ -1,7 +1,28 @@
+import { onAuthStateChanged, signOut } from "firebase/auth";
+import { useEffect, useState } from "react";
 import { NavLink, useNavigate } from "react-router-dom";
+import auth from "../../firebase";
 
 const Nav = () => {
+    const [alredyAcount,setAccount]=useState()
     const nav=useNavigate()
+    useEffect(()=>{
+        onAuthStateChanged(auth,(user)=>{
+            if(user){
+                setAccount(true)
+            }
+            else{
+                setAccount(false)
+            }
+        })
+    },[])
+
+ function handleSingOut(){
+    signOut(auth)
+    .then(()=>{
+        setAccount(false)
+    })
+ }
     return (
 
         <nav className="bg-gray-100 py-1">
@@ -31,6 +52,16 @@ const Nav = () => {
 
 
                         <li><NavLink to={'/AppliedJobs'} className={({ isActive, isPending }) => isActive ? 'font-black text-blue-700 underline ' : 'font-black'}>Applied Jobs</NavLink></li>
+
+                        {
+                            alredyAcount ? <li><NavLink  className='font-black' onClick={handleSingOut}>sing out</NavLink></li>
+                            :
+                            <li><NavLink to={'/Login'} className={({ isActive, isPending }) => isActive ? 'font-black text-blue-700 underline ' : 'font-black'}>sing up</NavLink></li>
+                        }
+
+                        
+
+                        <li><NavLink to={'/SingUp'} className={({ isActive, isPending }) => isActive ? 'font-black text-blue-700 underline ' : 'font-black'}>Login</NavLink></li>
 
 
                     </ul>
